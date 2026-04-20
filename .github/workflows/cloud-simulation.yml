@@ -1,1 +1,68 @@
-C:\Users\tkdwn\Documents\Codex\2026-04-19-3d-r\.github\workflows\cloud-simulation.yml
+name: Cloud Paper Simulation
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch:
+    inputs:
+      reset:
+        description: "Reset cloud simulation files before running"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: cloud-paper-simulation
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 2026-04-19-3d-r
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run one simulation tick
+        run: |
+          RESET_ARG=""
+          if [ "${{ github.event.inputs.reset }}" = "true" ]; then
+            RESET_ARG="--reset"
+          fi
+          python -m coin_mvp.cloud_tick \
+            --config config.cloud.json \
+            --start-kst "2026-04-20T21:10:00+09:00" \
+            --end-kst "2026-04-25T18:00:00+09:00" \
+            --top-markets 30 \
+            --request-delay 0.18 \
+            --output ../docs/index.html \
+            --output public_report/index.html \
+            $RESET_ARG
+
+      - name: Commit simulation state and report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdir -p ../docs data logs public_report
+          touch ../docs/.nojekyll
+          git add -A data logs public_report ../docs
+          if git diff --cached --quiet; then
+            echo "No simulation changes to commit."
+          else
+            git commit -m "Update cloud paper simulation"
+            git pull --rebase
+            git push
+          fi
+
