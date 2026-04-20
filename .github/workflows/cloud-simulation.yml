@@ -62,7 +62,7 @@ jobs:
             echo "No simulation changes to commit."
           else
             git commit -m "Update cloud paper simulation"
-            git pull --rebase
             git push
+
           fi
 
