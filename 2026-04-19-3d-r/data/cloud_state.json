@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T00:19:00+09:00",
+  "last_run_at": "2026-04-21T00:24:10+09:00",
   "ended": false,
-  "tick": 32,
-  "current_market": "KRW-CHZ",
-  "position_entry_tick": 26,
+  "tick": 39,
+  "current_market": "KRW-KERNEL",
+  "position_entry_tick": 39,
   "broker": {
-    "market": "KRW-CHZ",
-    "cash": 760755.0472510983,
-    "realized_pnl": -6237.948498832877,
+    "market": "KRW-KERNEL",
+    "cash": 744785.3718986373,
+    "realized_pnl": -6586.677240283927,
     "position": {
-      "qty": 3491.3600860511065,
-      "avg_price": 66.63329999999999
+      "qty": 2652.552437551948,
+      "avg_price": 93.54674999999999
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
-    "entries_today": 1,
-    "exits_today": 1,
-    "consecutive_losses": 2,
+    "entries_today": 2,
+    "exits_today": 2,
+    "consecutive_losses": 3,
     "halted": false,
     "halt_reason": ""
   }
