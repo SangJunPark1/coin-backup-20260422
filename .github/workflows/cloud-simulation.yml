@@ -2,7 +2,7 @@ name: Cloud Paper Simulation
 
 on:
   schedule:
-    - cron: "0,5,10,15,20,25,30,35,40,45,50,55 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
     inputs:
       reset:
@@ -47,22 +47,23 @@ jobs:
             --end-kst "2026-04-25T18:00:00+09:00" \
             --top-markets 30 \
             --request-delay 0.18 \
+            --cadence-minutes 5 \
+            --max-catch-up-ticks 12 \
             --output ../docs/index.html \
             --output public_report/index.html \
             $RESET_ARG
 
       - name: Commit simulation state and report
+        working-directory: .
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          mkdir -p ../docs data logs public_report
-          touch ../docs/.nojekyll
-          git add -A data logs public_report ../docs
+          mkdir -p docs 2026-04-19-3d-r/data 2026-04-19-3d-r/logs 2026-04-19-3d-r/public_report
+          touch docs/.nojekyll
+          git add -A docs 2026-04-19-3d-r/data 2026-04-19-3d-r/logs 2026-04-19-3d-r/public_report
           if git diff --cached --quiet; then
             echo "No simulation changes to commit."
           else
             git commit -m "Update cloud paper simulation"
             git push
-
           fi
-
