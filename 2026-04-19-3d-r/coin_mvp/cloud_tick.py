@@ -20,12 +20,14 @@ DEFAULT_END_KST = "2026-04-25T18:00:00+09:00"
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Run one cloud paper-trading tick and persist state.")
+    parser = argparse.ArgumentParser(description="Run cloud paper-trading ticks and persist state.")
     parser.add_argument("--config", default="config.cloud.json")
     parser.add_argument("--start-kst", default=DEFAULT_START_KST)
     parser.add_argument("--end-kst", default=DEFAULT_END_KST)
     parser.add_argument("--top-markets", type=int, default=30)
     parser.add_argument("--request-delay", type=float, default=0.18)
+    parser.add_argument("--cadence-minutes", type=int, default=5)
+    parser.add_argument("--max-catch-up-ticks", type=int, default=12)
     parser.add_argument("--output", action="append", default=[])
     parser.add_argument("--reset", action="store_true")
     args = parser.parse_args()
@@ -62,7 +64,8 @@ def main() -> None:
             },
         )
 
-    next_tick = int(state.get("tick", 0)) + 1 if state else 1
+    previous_tick = int(state.get("tick", 0)) if state else 0
+    next_tick = previous_tick + 1
 
     if now >= end_at:
         finish_simulation(app, next_tick, end_at)
@@ -71,10 +74,18 @@ def main() -> None:
         print("Cloud simulation finished.")
         return
 
-    app.run_tick(next_tick)
-    save_state(config.paths.state_file, app, next_tick, started_at=start_at, ended=False)
+    target_tick = calculate_target_tick(start_at, now, args.cadence_minutes)
+    target_tick = max(target_tick, next_tick)
+    target_tick = min(target_tick, previous_tick + max(1, args.max_catch_up_ticks))
+
+    completed_tick = previous_tick
+    for tick in range(next_tick, target_tick + 1):
+        app.run_tick(tick)
+        completed_tick = tick
+
+    save_state(config.paths.state_file, app, completed_tick, started_at=start_at, ended=False)
     refresh_outputs(config, outputs)
-    print(f"Cloud simulation tick completed: {next_tick}")
+    print(f"Cloud simulation ticks completed: {next_tick}-{completed_tick}")
 
 
 def parse_kst(value: str) -> datetime:
@@ -82,6 +93,12 @@ def parse_kst(value: str) -> datetime:
     if parsed.tzinfo is None:
         parsed = parsed.replace(tzinfo=KST)
     return parsed.astimezone(KST)
+
+
+def calculate_target_tick(start_at: datetime, now: datetime, cadence_minutes: int) -> int:
+    cadence_seconds = max(60, cadence_minutes * 60)
+    elapsed_seconds = max(0.0, (now - start_at).total_seconds())
+    return int(elapsed_seconds // cadence_seconds) + 1
 
 
 def load_state(path: Path) -> dict[str, Any]:
