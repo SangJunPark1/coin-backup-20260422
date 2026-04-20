@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-20T22:56:57+09:00",
+  "last_run_at": "2026-04-20T23:04:33+09:00",
   "ended": false,
-  "tick": 8,
+  "tick": 20,
   "current_market": "KRW-CPOOL",
   "position_entry_tick": 7,
   "broker": {
