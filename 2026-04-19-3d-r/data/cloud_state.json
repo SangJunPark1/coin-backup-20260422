@@ -1,23 +1,23 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T08:03:53+09:00",
+  "last_run_at": "2026-04-21T08:28:18+09:00",
   "ended": false,
-  "tick": 131,
-  "current_market": null,
-  "position_entry_tick": null,
+  "tick": 136,
+  "current_market": "KRW-IN",
+  "position_entry_tick": 134,
   "broker": {
-    "market": "KRW-KERNEL",
-    "cash": 994274.2584430946,
+    "market": "KRW-IN",
+    "cash": 745705.6938323209,
     "realized_pnl": -4770.05329392897,
     "position": {
-      "qty": 0.0,
-      "avg_price": 0.0
+      "qty": 2633.299260533766,
+      "avg_price": 94.34714999999998
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
-    "entries_today": 6,
+    "entries_today": 7,
     "exits_today": 7,
     "consecutive_losses": 0,
     "halted": false,
