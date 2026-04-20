@@ -94,9 +94,13 @@ def render_report(trades: list[TradeRow], events: list[dict[str, Any]]) -> str:
     risk = last_payload.get("risk", {}) if isinstance(last_payload, dict) else {}
     position = last_payload.get("position", {}) if isinstance(last_payload, dict) else {}
     cash = last_payload.get("cash") if isinstance(last_payload, dict) else None
+    portfolio = portfolio_summary(trades, events)
     status = status_message(risk, position, float(metrics["total_realized"]))
 
     cards = [
+        ("현재 평가금액", krw(portfolio["current_equity"])),
+        ("시작 대비", krw(portfolio["change_amount"])),
+        ("현재 수익률", pct(float(portfolio["return_pct"]) / 100.0)),
         ("전체 거래", str(len(trades))),
         ("완료 거래", str(metrics["exit_count"])),
         ("승률", pct(float(metrics["win_rate"]))),
@@ -137,6 +141,13 @@ def render_report(trades: list[TradeRow], events: list[dict[str, Any]]) -> str:
     .subtitle, .muted {{ color: var(--muted); }}
     .notice {{ background: #eef6ff; border: 1px solid #c9dffc; border-radius: 8px; padding: 13px 16px; margin-bottom: 16px; line-height: 1.55; }}
     .notice strong {{ color: var(--blue); }}
+    .portfolio-hero {{ display: grid; grid-template-columns: minmax(260px, 1.4fr) repeat(3, minmax(160px, 1fr)); gap: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; margin-bottom: 16px; overflow: hidden; }}
+    .portfolio-main, .portfolio-sub {{ padding: 16px 18px; border-right: 1px solid var(--line); }}
+    .portfolio-sub:last-child {{ border-right: 0; }}
+    .portfolio-title {{ color: var(--muted); font-size: 13px; margin-bottom: 8px; }}
+    .portfolio-amount {{ font-size: 34px; line-height: 1.12; font-weight: 800; letter-spacing: 0; overflow-wrap: anywhere; }}
+    .portfolio-value {{ font-size: 23px; line-height: 1.2; font-weight: 800; overflow-wrap: anywhere; }}
+    .portfolio-note {{ margin-top: 8px; color: var(--muted); font-size: 12px; line-height: 1.45; }}
     .grid {{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }}
     .card, section {{ background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }}
     .card {{ padding: 14px; min-height: 72px; }}
@@ -169,11 +180,16 @@ def render_report(trades: list[TradeRow], events: list[dict[str, Any]]) -> str:
     @media (max-width: 900px) {{
       main {{ padding: 20px 12px 40px; }}
       header {{ display: block; }}
+      .portfolio-hero {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
+      .portfolio-main {{ grid-column: 1 / -1; }}
       .grid, .state-grid, .diagnosis {{ grid-template-columns: repeat(2, minmax(0, 1fr)); }}
       table {{ min-width: 900px; }}
     }}
     @media (max-width: 560px) {{
       h1 {{ font-size: 24px; }}
+      .portfolio-hero {{ grid-template-columns: 1fr; }}
+      .portfolio-main, .portfolio-sub {{ border-right: 0; border-bottom: 1px solid var(--line); }}
+      .portfolio-amount {{ font-size: 29px; }}
       .grid, .state-grid, .diagnosis {{ grid-template-columns: 1fr; }}
       .table-wrap {{ max-height: 70vh; }}
     }}
@@ -188,6 +204,7 @@ def render_report(trades: list[TradeRow], events: list[dict[str, Any]]) -> str:
     </div>
     <div class="subtitle">마지막 갱신: {html.escape(refreshed_at)}</div>
   </header>
+  {render_portfolio_hero(portfolio)}
   <div class="notice"><strong>현재 모드: 모의거래</strong><br>이 화면은 수익을 보장하지 않습니다. 특히 완료 거래가 적을 때는 승률과 기대값이 크게 흔들리므로, 대수의 법칙 관점에서 표본 수와 신뢰구간을 먼저 보세요.</div>
   <div class="grid">{render_cards(cards)}</div>
   <section><h2>현재 상태</h2>{render_state_panel(risk, position, status)}</section>
@@ -304,6 +321,121 @@ def render_cards(cards: list[tuple[str, str]]) -> str:
         f'<div class="card"><div class="label">{html.escape(label)}</div><div class="value">{html.escape(value)}</div></div>'
         for label, value in cards
     )
+
+
+def portfolio_summary(trades: list[TradeRow], events: list[dict[str, Any]]) -> dict[str, float | str]:
+    starting_cash = find_starting_cash(events) or 1_000_000.0
+    latest_equity = find_latest_equity(events)
+    latest_price = find_latest_price(events)
+    cash = find_latest_cash(trades, events)
+    open_position_qty = 0.0
+    open_position_market = ""
+
+    for trade in trades:
+        if trade.side == "buy":
+            open_position_qty = trade.position_qty_after
+            open_position_market = trade.market
+        elif trade.side == "sell":
+            open_position_qty = 0.0
+            open_position_market = ""
+
+    if latest_equity is None:
+        if cash is not None and open_position_qty > 0 and latest_price is not None:
+            latest_equity = cash + (open_position_qty * latest_price)
+        elif cash is not None:
+            latest_equity = cash
+        else:
+            latest_equity = starting_cash
+
+    change_amount = latest_equity - starting_cash
+    return_pct = (change_amount / starting_cash) * 100.0 if starting_cash else 0.0
+    position_status = f"{open_position_market} 보유 중" if open_position_qty > 0 else "미보유"
+    return {
+        "starting_cash": starting_cash,
+        "current_equity": latest_equity,
+        "change_amount": change_amount,
+        "return_pct": return_pct,
+        "cash": cash if cash is not None else latest_equity,
+        "position_qty": open_position_qty,
+        "position_status": position_status,
+    }
+
+
+def render_portfolio_hero(portfolio: dict[str, float | str]) -> str:
+    change = float(portfolio["change_amount"])
+    change_class = "pos" if change > 0 else "neg" if change < 0 else ""
+    position_status = str(portfolio["position_status"])
+    return f"""
+  <div class="portfolio-hero">
+    <div class="portfolio-main">
+      <div class="portfolio-title">현재 평가금액</div>
+      <div class="portfolio-amount">{html.escape(krw(float(portfolio["current_equity"])))}</div>
+      <div class="portfolio-note">시작금액 {html.escape(krw(float(portfolio["starting_cash"])))} 기준입니다.</div>
+    </div>
+    <div class="portfolio-sub">
+      <div class="portfolio-title">시작 대비 손익</div>
+      <div class="portfolio-value {change_class}">{html.escape(krw(change))}</div>
+      <div class="portfolio-note">실현/미실현 평가를 합친 기준입니다.</div>
+    </div>
+    <div class="portfolio-sub">
+      <div class="portfolio-title">현재 수익률</div>
+      <div class="portfolio-value {change_class}">{html.escape(pct(float(portfolio["return_pct"]) / 100.0))}</div>
+      <div class="portfolio-note">100만원 대비 변화율입니다.</div>
+    </div>
+    <div class="portfolio-sub">
+      <div class="portfolio-title">보유 상태</div>
+      <div class="portfolio-value">{html.escape(position_status)}</div>
+      <div class="portfolio-note">현금 {html.escape(krw(float(portfolio["cash"])))}</div>
+    </div>
+  </div>
+"""
+
+
+def find_starting_cash(events: list[dict[str, Any]]) -> float | None:
+    for event in events:
+        payload = event.get("payload", {}) if isinstance(event, dict) else {}
+        if isinstance(payload, dict):
+            value = to_float(payload.get("starting_cash"))
+            if value is not None:
+                return value
+    return None
+
+
+def find_latest_equity(events: list[dict[str, Any]]) -> float | None:
+    for event in reversed(events):
+        payload = event.get("payload", {}) if isinstance(event, dict) else {}
+        if isinstance(payload, dict):
+            value = to_float(payload.get("equity"))
+            if value is not None:
+                return value
+    return None
+
+
+def find_latest_price(events: list[dict[str, Any]]) -> float | None:
+    for event in reversed(events):
+        payload = event.get("payload", {}) if isinstance(event, dict) else {}
+        if isinstance(payload, dict):
+            value = to_float(payload.get("price"))
+            if value is not None:
+                return value
+    return None
+
+
+def find_latest_cash(trades: list[TradeRow], events: list[dict[str, Any]]) -> float | None:
+    for event in reversed(events):
+        payload = event.get("payload", {}) if isinstance(event, dict) else {}
+        if isinstance(payload, dict):
+            value = to_float(payload.get("cash"))
+            if value is not None:
+                return value
+            fill = payload.get("fill")
+            if isinstance(fill, dict):
+                value = to_float(fill.get("cash_after"))
+                if value is not None:
+                    return value
+    if trades:
+        return trades[-1].cash_after
+    return None
 
 
 def render_state_panel(risk: dict[str, Any], position: dict[str, Any], status: str) -> str:
