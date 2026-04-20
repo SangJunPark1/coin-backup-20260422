@@ -1,3 +1,4 @@
 timestamp,market,side,price,qty,fee,cash_after,position_qty_after,realized_pnl,reason
 2026-04-20T12:27:23.175792+00:00,KRW-RED,buy,200.10000000,1248.750624687656,125.00000000,750000.00000000,1248.750624687656,0.00000000,uptrend filter passed; momentum 0.50%; volume 1.85x; RSI 66.7; above EMA200; btc regime ok: momentum -0.07%; selected from top-volume scan
 2026-04-20T13:45:42.435050+00:00,KRW-RED,sell,198.90050000,1248.750624687656,124.18856181,998252.93506387,0.000000000000,-1622.06493613,trend break
+2026-04-20T13:47:47.344137+00:00,KRW-CPOOL,buy,41.12055000,6066.029081544036,124.78161688,748689.70129791,6066.029081544036,0.00000000,uptrend filter passed; momentum 0.24%; volume 7.09x; RSI 50.0; above EMA200; btc regime ok: momentum 0.00%; selected from top-volume scan

@@ -1,23 +1,23 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-20T22:45:42+09:00",
+  "last_run_at": "2026-04-20T22:47:47+09:00",
   "ended": false,
-  "tick": 6,
-  "current_market": null,
-  "position_entry_tick": null,
+  "tick": 7,
+  "current_market": "KRW-CPOOL",
+  "position_entry_tick": 7,
   "broker": {
-    "market": "KRW-RED",
-    "cash": 998252.9350638743,
+    "market": "KRW-CPOOL",
+    "cash": 748689.7012979058,
     "realized_pnl": -1622.064936125651,
     "position": {
-      "qty": 0.0,
-      "avg_price": 0.0
+      "qty": 6066.029081544036,
+      "avg_price": 41.12055
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-20",
-    "entries_today": 1,
+    "entries_today": 2,
     "exits_today": 1,
     "consecutive_losses": 1,
     "halted": false,
