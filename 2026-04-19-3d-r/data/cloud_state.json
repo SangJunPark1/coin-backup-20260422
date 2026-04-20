@@ -1,23 +1,23 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T06:28:23+09:00",
+  "last_run_at": "2026-04-21T06:59:08+09:00",
   "ended": false,
-  "tick": 112,
-  "current_market": null,
-  "position_entry_tick": null,
+  "tick": 118,
+  "current_market": "KRW-FLOCK",
+  "position_entry_tick": 113,
   "broker": {
-    "market": "KRW-PLUME",
-    "cash": 993936.4197996857,
+    "market": "KRW-FLOCK",
+    "cash": 745452.3148497643,
     "realized_pnl": -5356.104526624025,
     "position": {
-      "qty": 0.0,
-      "avg_price": 0.0
+      "qty": 2795.4475791096174,
+      "avg_price": 88.8444
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
-    "entries_today": 4,
+    "entries_today": 5,
     "exits_today": 5,
     "consecutive_losses": 2,
     "halted": false,
