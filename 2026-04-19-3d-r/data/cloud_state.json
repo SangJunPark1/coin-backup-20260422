@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-20T22:19:46+09:00",
+  "last_run_at": "2026-04-20T22:45:42+09:00",
   "ended": false,
-  "tick": 5,
-  "current_market": "KRW-RED",
-  "position_entry_tick": 1,
+  "tick": 6,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
     "market": "KRW-RED",
-    "cash": 750000.0,
-    "realized_pnl": 0.0,
+    "cash": 998252.9350638743,
+    "realized_pnl": -1622.064936125651,
     "position": {
-      "qty": 1248.7506246876562,
-      "avg_price": 200.1
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 1000000.0,
     "day_key": "2026-04-20",
     "entries_today": 1,
-    "exits_today": 0,
-    "consecutive_losses": 0,
+    "exits_today": 1,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": ""
   }
