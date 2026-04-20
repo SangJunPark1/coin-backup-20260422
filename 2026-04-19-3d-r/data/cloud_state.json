@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T01:37:38+09:00",
+  "last_run_at": "2026-04-21T01:38:04+09:00",
   "ended": false,
-  "tick": 51,
+  "tick": 54,
   "current_market": "KRW-KERNEL",
   "position_entry_tick": 39,
   "broker": {
