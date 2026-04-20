@@ -1,0 +1,2 @@
+timestamp,market,side,price,qty,fee,cash_after,position_qty_after,realized_pnl,reason
+2026-04-19T07:42:35.505717+00:00,KRW-MOVE,buy,31.31565000,7979.237218451478,125.00000000,750000.00000000,7979.237218451478,0.00000000,uptrend filter passed; selected from top-volume scan

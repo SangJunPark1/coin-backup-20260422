@@ -1,0 +1,2 @@
+{"timestamp": "2026-04-19T07:23:59Z", "event": "watch_started", "payload": {"mode": "paper", "market": "KRW-BTC", "source": "upbit", "ticks": 864, "report_every": 1}}
+{"timestamp": "2026-04-19T07:23:59Z", "event": "tick", "payload": {"tick": 1, "price": 111600000.0, "equity": 1000000.0, "signal": {"side": "hold", "reason": "no entry condition", "price": 111600000.0, "confidence": 0.1}, "approved": false, "risk_reason": "hold signal", "risk": {"starting_equity": 1000000.0, "entries_today": 0, "exits_today": 0, "consecutive_losses": 0, "halted": false, "halt_reason": ""}}}
