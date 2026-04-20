@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T05:26:39+09:00",
+  "last_run_at": "2026-04-21T05:30:42+09:00",
   "ended": false,
-  "tick": 100,
-  "current_market": "KRW-BTC",
-  "position_entry_tick": 82,
+  "tick": 101,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
     "market": "KRW-BTC",
-    "cash": 746599.4728224932,
-    "realized_pnl": -4043.745113159559,
+    "cash": 995281.4791460934,
+    "realized_pnl": -4103.7964849199925,
     "position": {
-      "qty": 0.002205113696458856,
-      "avg_price": 112802373.0
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
     "entries_today": 3,
-    "exits_today": 3,
-    "consecutive_losses": 0,
+    "exits_today": 4,
+    "consecutive_losses": 1,
     "halted": false,
     "halt_reason": ""
   }
