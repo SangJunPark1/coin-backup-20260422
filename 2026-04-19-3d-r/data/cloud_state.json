@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T04:44:13+09:00",
+  "last_run_at": "2026-04-21T04:46:00+09:00",
   "ended": false,
-  "tick": 91,
+  "tick": 92,
   "current_market": "KRW-BTC",
   "position_entry_tick": 82,
   "broker": {
