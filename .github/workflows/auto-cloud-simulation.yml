@@ -2,7 +2,7 @@ name: Auto Cloud Paper Simulation
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,9 +28,9 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
 
-      - name: Run one scheduled simulation tick
+      - name: Run catch-up simulation ticks
         run: |
           python -m coin_mvp.cloud_tick \
             --config config.cloud.json \
@@ -38,6 +38,8 @@ jobs:
             --end-kst "2026-04-25T18:00:00+09:00" \
             --top-markets 30 \
             --request-delay 0.18 \
+            --cadence-minutes 5 \
+            --max-catch-up-ticks 12 \
             --output ../docs/index.html \
             --output public_report/index.html
 
