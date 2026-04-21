@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-22T00:49:28+09:00",
+  "last_run_at": "2026-04-22T01:47:32+09:00",
   "ended": false,
-  "tick": 299,
-  "current_market": "KRW-BIO",
-  "position_entry_tick": 276,
+  "tick": 311,
+  "current_market": null,
+  "position_entry_tick": null,
   "broker": {
     "market": "KRW-BIO",
-    "cash": 813403.2144743066,
-    "realized_pnl": 7197.059096611134,
+    "cash": 1002173.6054542027,
+    "realized_pnl": 3966.281014695269,
     "position": {
-      "qty": 4208.447729245289,
-      "avg_price": 45.6228
+      "qty": 0.0,
+      "avg_price": 0.0
     }
   },
   "risk": {
     "starting_equity": 1005500.4321449539,
     "day_key": "2026-04-22",
     "entries_today": 1,
-    "exits_today": 0,
-    "consecutive_losses": 1,
+    "exits_today": 1,
+    "consecutive_losses": 2,
     "halted": false,
     "halt_reason": ""
   }
