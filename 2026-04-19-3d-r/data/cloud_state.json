@@ -1,24 +1,24 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T14:51:29+09:00",
+  "last_run_at": "2026-04-21T16:06:35+09:00",
   "ended": false,
-  "tick": 191,
-  "current_market": "KRW-BIO",
-  "position_entry_tick": 181,
+  "tick": 203,
+  "current_market": "KRW-PIEVERSE",
+  "position_entry_tick": 194,
   "broker": {
-    "market": "KRW-BIO",
-    "cash": 742189.4302774807,
-    "realized_pnl": -8963.112530985847,
+    "market": "KRW-PIEVERSE",
+    "cash": 762242.9882532277,
+    "realized_pnl": 7714.228732731892,
     "position": {
-      "qty": 5884.504855210029,
-      "avg_price": 42.021
+      "qty": 151.9032338742393,
+      "avg_price": 1604.802
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
-    "entries_today": 11,
-    "exits_today": 11,
+    "entries_today": 12,
+    "exits_today": 12,
     "consecutive_losses": 0,
     "halted": false,
     "halt_reason": ""
