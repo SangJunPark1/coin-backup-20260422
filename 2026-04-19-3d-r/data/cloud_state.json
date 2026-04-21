@@ -1,25 +1,25 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-21T12:39:54+09:00",
+  "last_run_at": "2026-04-21T14:11:20+09:00",
   "ended": false,
-  "tick": 167,
-  "current_market": "KRW-FLOCK",
-  "position_entry_tick": 163,
+  "tick": 179,
+  "current_market": "KRW-AAVE",
+  "position_entry_tick": 170,
   "broker": {
-    "market": "KRW-FLOCK",
-    "cash": 742934.9850911048,
-    "realized_pnl": -8216.088205399545,
+    "market": "KRW-AAVE",
+    "cash": 739357.5703842086,
+    "realized_pnl": -12862.151983746007,
     "position": {
-      "qty": 2674.5672842805957,
-      "avg_price": 92.54625
+      "qty": 1.7802327845453423,
+      "avg_price": 138369.15
     }
   },
   "risk": {
     "starting_equity": 993757.2761922848,
     "day_key": "2026-04-21",
-    "entries_today": 9,
-    "exits_today": 9,
-    "consecutive_losses": 2,
+    "entries_today": 10,
+    "exits_today": 10,
+    "consecutive_losses": 3,
     "halted": false,
     "halt_reason": ""
   }
