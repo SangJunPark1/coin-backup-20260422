@@ -32,3 +32,4 @@ timestamp,market,side,price,qty,fee,cash_after,position_qty_after,realized_pnl,r
 2026-04-21T17:40:50.862067+00:00,KRW-BIO,buy,45.62280000,5488.881209896564,125.27170068,751630.20409065,5488.881209896564,0.00000000,uptrend filter passed; momentum 0.88%; volume 5.80x; RSI 58.3; above EMA200; btc regime ok: momentum 0.44%; selected from top-volume scan
 2026-04-21T17:44:41.634804+00:00,KRW-BIO,sell,45.47725000,5488.881209896564,124.80961150,1001124.61748192,0.000000000000,-923.71627160,"time stop reached: held 12 ticks, pnl -0.27%"
 2026-04-21T17:46:27.783332+00:00,KRW-FLOCK,buy,94.44720000,2648.633456505800,125.14057719,750843.46311144,2648.633456505800,0.00000000,uptrend filter passed; momentum 0.43%; volume 2.75x; RSI 66.7; above EMA200; btc regime ok: momentum -0.10%; selected from top-volume scan
+2026-04-21T18:43:24.530568+00:00,KRW-FLOCK,sell,92.95350000,2648.633456505800,123.09987500,996920.11323575,0.000000000000,-4079.36366898,stop loss reached: -1.53%
