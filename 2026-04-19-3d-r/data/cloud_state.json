@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-22T00:47:27+09:00",
+  "last_run_at": "2026-04-22T00:49:28+09:00",
   "ended": false,
-  "tick": 287,
+  "tick": 299,
   "current_market": "KRW-BIO",
   "position_entry_tick": 276,
   "broker": {
