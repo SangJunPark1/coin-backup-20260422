@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-04-24T23:07:08+09:00",
+  "last_run_at": "2026-04-25T00:22:49+09:00",
   "ended": false,
-  "tick": 1162,
+  "tick": 1174,
   "current_market": null,
   "position_entry_tick": null,
   "broker": {
@@ -16,7 +16,7 @@
   },
   "risk": {
     "starting_equity": 996920.1132357517,
-    "day_key": "2026-04-24",
+    "day_key": "2026-04-25",
     "entries_today": 0,
     "exits_today": 0,
     "consecutive_losses": 4,
