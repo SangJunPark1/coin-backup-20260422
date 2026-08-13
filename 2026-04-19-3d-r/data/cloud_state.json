@@ -1,8 +1,8 @@
 {
   "started_at": "2026-04-20T21:10:00+09:00",
-  "last_run_at": "2026-08-13T20:12:40+09:00",
+  "last_run_at": "2026-08-13T20:56:50+09:00",
   "ended": true,
-  "tick": 4342,
+  "tick": 4343,
   "current_market": null,
   "position_entry_tick": null,
   "broker": {
